@@ -30,3 +30,11 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Generated social card, browser reports and local verification files
+/public/social-card.png
+/artifacts/
+/baseline-audit.json
+/final-audit.json
+/.netlify/
+/dev-server*.log

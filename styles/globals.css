@@ -1,120 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
-* {
-   box-sizing: border-box;
-   padding: 0;
-   margin: 0;
-   font-family: 'Nunito', sans-serif;
+@layer base {
+  body { font-family: 'Nunito', sans-serif; background: #f7f5ed; color: #1c4026; }
+  html { scroll-padding-top: 6rem; }
+  :focus-visible { outline: 3px solid #df990d; outline-offset: 4px; }
+  section, main { scroll-margin-top: 6rem; }
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
+@layer components {
+  .section-shell { @apply mx-auto max-w-6xl px-4 py-16 sm:px-8 md:py-20; }
+  .section-heading { @apply text-center text-5xl font-black sm:text-6xl lg:text-7xl; }
+  .site-header { @apply fixed inset-x-0 top-0 z-30 bg-[#1c4026]/95 shadow-md backdrop-blur-sm; }
+  .hero-background { background: url('../backgrounds/intro_cropcopy.jpg') center / cover no-repeat; }
+  .about-background { background: url('../backgrounds/aboutBgcopy.jpg') center / cover no-repeat; }
+  .tracks-background { background: url('../backgrounds/BOBBY_DA_GOAT_905x759.png') center / cover no-repeat; }
+  .faq { @apply rounded-xl bg-[#f1ded3] text-[#38231d] shadow-sm; }
+  .faq summary::marker { color: #6a463d; }
+  .skip-link { @apply fixed left-4 top-3 z-50 -translate-y-24 rounded-lg bg-white px-5 py-3 font-bold text-[#1c4026] focus:translate-y-0; }
 }
 
-.image_one {
-  background-image: url('../backgrounds/intro_cropfirst2.jpg');
-  width:1348px;
-  height:1451px;
-  background-repeat: no-repeat
-}
-/*
-.image_two {
-  background-image: url('../backgrounds/aboutBgadjusted.jpeg');
-  width:100%;
-  height:869px;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-}
-*/
-a {
-  color: inherit;
-  text-decoration: none;
-}
-h1 {
-	color: #556b2f;
-}
-h4 {
-	color: #FFF;
-}
-
-.workshop-background {
-	background-color: white;
-  }
-  
-
-.faqs {
-	width: 100%;
-	max-width: 768px;
-	margin: 0 auto;
-	padding: 15px;
-}
-
-.faqs .faq {
-	margin: 15px;
-	padding: 15px;
-	background-color: #FFF;
-	border-radius: 8px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-	background-color: #b38f80;
-	color: white;
-}
-
-.faqs .faq .faq-question {
-	position: relative;
-  font-size: 20px;
-  font-weight: 800;
-	padding-right: 80px;
-	transition: all 0.4s ease;
-}
-
-.faqs .faq .faq-question::after {
-	content: '';
-	position: absolute;
-	top: 50%;
-	right: 0px;
-	transform: translateY(-50%);
-	width: 30px;
-	height: 30px;
-
-	background-image: url('../public/images/right-arrow.svg');
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
-
-	transition: all 0.4s ease-out;
-}
-
-.faqs .faq .faq-answer {
-	opacity: 0;
-	max-height: 0;
-	overflow-y: hidden;
-	transition: all 0.4s ease-out;
-}
-
-.faqs .faq.open .faq-question::after {
-	transform: translateY(-50%) rotate(90deg);
-}
-
-.faqs .faq.open .faq-answer {
-	max-height: 1000px;
-	opacity: 1;
-}
-
-@media (-webkit-device-pixel-ratio: 1.25) {
-	:root {
-	  zoom: 0.8;
-	}
-}
-
-@media (-webkit-device-pixel-ratio: 1.50) {
-	* {
-	  zoom: 0.7;
-	}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
 }

@@ -1,17 +1,13 @@
 import Image from 'next/image'
 
-function AboutItem(props) {
-    return (
-        <div className='px-6 space-y-4 p-10 bg-[#556b2f] mt-8 rounded-3xl mx-auto max-w-md flex-1'>
-            <h4 className='text-center font-bold text-2xl text-white'>{props.title}</h4>
-            <div className='flex flex-col justify-around h-[425px]'>
-                <div className='m-auto pb-10 lg:max-w-xs lg:pb-6 lg:px-0'>
-                    <Image src={props.img} alt='image in event blocks'/>
-                </div>
-                <p className='text-sm text-center text-white font-medium'>{props.description}</p>
-            </div>
-        </div>
-    )
+export default function AboutItem({ title, image, description }) {
+  return (
+    <article className="flex flex-col items-center rounded-3xl bg-[#556b2f] p-6 text-center text-white">
+      <h3 className="text-2xl font-bold">{title}</h3>
+      <div className="my-6 w-full max-w-[220px]">
+        <Image src={image} alt="" className="h-auto w-full" sizes="220px" />
+      </div>
+      <p className="mt-auto text-lg leading-relaxed">{description}</p>
+    </article>
+  )
 }
-
-export default AboutItem;

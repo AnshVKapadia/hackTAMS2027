@@ -1,0 +1,16 @@
+[build]
+  command = "npm run lint && npm test && npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_VERSION = "10.9.3"
+  # npm is authoritative; the historical yarn.lock is not used.
+  NETLIFY_USE_YARN = "false"
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
