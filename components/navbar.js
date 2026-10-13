@@ -1,57 +1,59 @@
-import {useState, useEffect} from 'react'
-import Hamburger from 'hamburger-react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import navDuck from '../public/images/navDuck.PNG'
-import mlhTrustBadgeGrey from '../public/images/mlh-trust-badge-2024-white.svg'
-import {REGISTRATION_LINK} from "../utils/constants";
+import { event, eventTitle } from '../data/event.mjs'
 
-function NavBarPage(props) {
-    //for mobile menu
-    const [toggleMenu, setToggleMenu] = useState(false)
-    const toggleNav = () => {
-        setToggleMenu(!toggleMenu)
+const navigation = [
+  ['about', 'about'], ['program', 'events'], ['tracks', 'tracks'],
+  ['challenges', 'prizes'], ['faq', 'faq'], ['sponsors', 'sponsors'],
+  ['registration', 'registration'],
+]
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
+  const menuButtonRef = useRef(null)
+
+  useEffect(() => {
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false)
+        menuButtonRef.current?.focus()
+      }
     }
+    const desktop = window.matchMedia('(min-width: 976px)')
+    const closeOnDesktop = () => { if (desktop.matches) setIsOpen(false) }
+    document.addEventListener('keydown', closeOnEscape)
+    desktop.addEventListener('change', closeOnDesktop)
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape)
+      desktop.removeEventListener('change', closeOnDesktop)
+    }
+  }, [isOpen])
 
-    //for hamburger menu
-    const [isOpen, setOpen] = useState(false)
+  const closeAfterNavigation = (id) => {
+    setIsOpen(false)
+    document.getElementById(id)?.focus({ preventScroll: true })
+  }
 
-    return (
-        <nav className="relative">
-            <div className='flex items-center px-16 justify-end space-x-12 fixed top-0 bg-c21 bg-opacity-20 backdrop-blur-sm z-10 w-full'>
-                <a href="#home" className='block max-w-xs pt-2'>
-                    <Image src={navDuck} alt='duck in nav bar'/>
-                </a>
-                <div className='hidden space-x-8 text-white font-[550] text-lg lg:flex flex-row'>
-                    <a href="#about" className='hover:text-c5'>about</a>
-                    <a href="#tracks" className='hover:text-c5'>tracks</a>
-                    <a href="#challenges" className='hover:text-c5'>prizes</a>
-                    <a href="#faq" className='hover:text-c5'>faq</a>
-                    <a href="#sponsors" className='hover:text-c5'>sponsors</a>
-                    <a href={REGISTRATION_LINK} target='_blank' rel='noreferrer' className='hover:text-c5'>registration</a>
-                </div>
-                <div className="inline-block z-30 lg:hidden" onClick={toggleNav}>
-                    <Hamburger toggled={isOpen} toggle={setOpen}/>
-                </div>
-            </div>
-
-            {toggleMenu && (
-            <div className="lg:hidden">
-                <div id="menu" className="absolute flex flex-col items-center self-end py-10 mt-10 space-y-6 font-bold bg-white left-6 right-6 drop-shadow-md sm:w-auto sm:self-center mt-20 z-40">
-                    <a href="#about" className='hover:text-c18'>about</a>
-                    <a href="#tracks" className='hover:text-c18'>tracks</a>
-                    <a href="#challenges" className='hover:text-c18'>prizes</a>
-                    <a href="#faq" className='hover:text-c18'>faq</a>
-                    <a href="#sponsors" className='hover:text-c18'>sponsors</a>
-                    <a href={REGISTRATION_LINK} target='_blank' rel='noreferrer' className='hover:text-c18'>registration</a>
-                </div>
-            </div>)}
-
-            <div className="max-w-[80px] min-w-[60px] fixed z-20 left-12 lg:max-w-[120px] lg:left-32">
-                <Image src={mlhTrustBadgeGrey} alt="Major League Hacking 2023 Hackathon Season Banner"/>
-            </div>
-            
-        </nav>
-    )
+  return (
+    <header className="site-header">
+      <nav aria-label="Main navigation" className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-8">
+        <a href="#home" aria-label={`${eventTitle} home`} className="flex items-center gap-3 font-black text-white" onClick={() => closeAfterNavigation('home')}>
+          <Image src={navDuck} alt="" className="h-12 w-12 object-contain" sizes="48px" />
+          <span className="text-lg">{event.name}</span>
+        </a>
+        <button ref={menuButtonRef} type="button" className="rounded-lg border border-white/60 px-4 py-2 font-bold text-white lg:hidden"
+          aria-controls="navigation-links" aria-expanded={isOpen} onClick={() => setIsOpen((open) => !open)}>
+          {isOpen ? 'Close menu' : 'Menu'}
+        </button>
+        <ul id="navigation-links" className={`${isOpen ? 'flex' : 'hidden'} w-full flex-col gap-1 pb-2 text-white lg:flex lg:w-auto lg:flex-row lg:gap-1 lg:pb-0`}>
+          {navigation.map(([id, label]) => (
+            <li key={id}>
+              <a href={`#${id}`} className="block rounded-lg px-3 py-3 font-bold hover:bg-white/15" onClick={() => closeAfterNavigation(id)}>{label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+  )
 }
-
-export default NavBarPage;

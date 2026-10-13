@@ -1,25 +1,38 @@
 {
-  "name": "hacktams2023",
+  "name": "hacktams2027",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "predev": "node scripts/generate-social-image.mjs",
+    "dev": "next dev --webpack",
+    "prebuild": "node scripts/generate-social-image.mjs",
+    "build": "next build --webpack",
+    "start": "node scripts/serve.mjs",
+    "lint": "eslint . --max-warnings=0",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node scripts/check-browser.mjs"
   },
   "dependencies": {
-    "flowbite": "^1.5.1",
-    "hamburger-react": "^2.5.0",
-    "next": "12.2.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@fontsource/nunito": "5.3.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.7",
-    "eslint": "8.20.0",
-    "eslint-config-next": "12.2.3",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.6"
-  }
+    "@axe-core/playwright": "4.13.0",
+    "@eslint/js": "10.0.1",
+    "@eslint-react/eslint-plugin": "5.26.3",
+    "@tailwindcss/postcss": "4.3.3",
+    "eslint": "10.12.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.13.0",
+    "playwright": "1.64.0",
+    "postcss": "8.5.30",
+    "sharp": "0.35.5",
+    "tailwindcss": "4.3.3"
+  },
+  "engines": {
+    "node": ">=22.20.0 <23"
+  },
+  "packageManager": "npm@10.9.3"
 }
